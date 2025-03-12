@@ -3,6 +3,7 @@ use model::ModelConfig;
 
 mod data;
 mod model;
+mod training;
 
 fn main() {
     type MyBackend = Wgpu<f32, i32>;

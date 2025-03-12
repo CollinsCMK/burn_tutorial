@@ -7,6 +7,7 @@ use burn::{
         Dropout, DropoutConfig, Linear, LinearConfig, Relu,
     },
     prelude::Backend,
+    tensor::Tensor,
 };
 
 #[derive(Module, Debug)]
@@ -40,6 +41,28 @@ impl ModelConfig {
             linear2: LinearConfig::new(self.hidden_size, self.num_classes).init(device),
             dropout: DropoutConfig::new(self.dropout).init(),
         }
+    }
+}
+
+impl<B: Backend> Model<B> {
+    pub fn forward(&self, images: Tensor<B, 3>) -> Tensor<B, 2> {
+        let [batch_size, height, widht] = images.dims();
+
+        let x = images.reshape([batch_size, 1, height, widht]);
+
+        let x = self.conv1.forward(x);
+        let x = self.dropout.forward(x);
+        let x = self.conv2.forward(x);
+        let x = self.dropout.forward(x);
+        let x = self.activation.forward(x);
+
+        let x = self.pool.forward(x);
+        let x = x.reshape([batch_size, 16 * 8 * 8]);
+        let x = self.linear1.forward(x);
+        let x = self.dropout.forward(x);
+        let x = self.activation.forward(x);
+
+        self.linear2.forward(x)
     }
 }
 
