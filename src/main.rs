@@ -1,6 +1,7 @@
 use burn::backend::Wgpu;
 use model::ModelConfig;
 
+mod data;
 mod model;
 
 fn main() {
