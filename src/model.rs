@@ -42,3 +42,31 @@ impl ModelConfig {
         }
     }
 }
+
+// This Rust code defines a simple convolutional neural network (CNN) model using the burn deep learning framework. Here's a breakdown of what it does:
+
+// 1. Struct Definitions
+// Model<B: Backend>: Defines the CNN model, which consists of:
+
+// Two convolutional layers (conv1, conv2) for feature extraction.
+// One adaptive average pooling layer (pool) to reduce spatial dimensions.
+// One dropout layer (dropout) to prevent overfitting.
+// Two fully connected (linear) layers (linear1, linear2) for classification.
+// A ReLU activation function (activation).
+// ModelConfig: A configuration structure that holds:
+
+// num_classes: Number of output classes for classification.
+// hidden_size: Number of neurons in the first fully connected layer.
+// dropout: Dropout rate (default 0.5).
+// 2. Initialization (init method)
+// Creates and initializes the layers with the given device (CPU/GPU).
+// The network structure:
+// conv1: 1 input channel → 8 output channels, kernel size (3,3).
+// conv2: 8 input channels → 16 output channels, kernel size (3,3).
+// pool: Adaptive average pooling to (8,8).
+// linear1: Fully connected layer from 16 × 8 × 8 → hidden_size.
+// linear2: Fully connected layer from hidden_size → num_classes.
+// dropout: Applied before fully connected layers.
+// Usage
+// ModelConfig is used to initialize a Model with a specific number of classes and hidden layer size.
+// This model can be trained for image classification tasks.
